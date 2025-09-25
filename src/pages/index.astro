@@ -1,8 +1,31 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Form from '../components/Form.astro';
+import Table from '../components/Table.astro';
 ---
 
 <Layout>
-	<Welcome />
+	<main class="main">
+		<h2>Ingresa los datos solicitados para ver el estado de su envio</h2>
+		<Form />
+		<Table />
+	</main>
 </Layout>
+
+<style>
+	.main {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: stretch;
+		row-gap: 40px;
+		height: 100vh;
+		max-width: 1300px;
+		margin: 0 auto;
+		padding: 0 150px;
+	}
+
+	h2 { 
+		text-align: center;
+	}
+</style>

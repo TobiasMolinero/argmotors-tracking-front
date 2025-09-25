@@ -1,0 +1,54 @@
+<script is:inline>
+    // document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('trackingNumber', async (e) => {
+            const tableBody = document.querySelector('.tbody');
+            const { trackingNumber } = e.detail;
+            const res = await fetch(`http://localhost:3000/envios/${trackingNumber}`);
+            const data = await res.json();
+            const dataEnvio = data.datos;
+            console.log(dataEnvio)
+
+            tableBody.innerHTML = `
+                <tr>
+                    <td>${dataEnvio[0].estado}</td>
+                    <td>${dataEnvio[0].hbl}</td>
+                    <td>${dataEnvio[0].contenedor_guia}</td>    
+                    <td>${dataEnvio[0].fecha_envio}</td>    
+                    <td>${dataEnvio[0].nombre_consignatario}</td>    
+                    <td>${dataEnvio[0].carnet_identidad}</td>    
+                </tr>
+            `
+        })
+    // })
+</script>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Estado</th>
+			<th>HBL</th>
+			<th>Contenedor/guía</th>
+			<th>Fecha de salida</th>
+			<th>Nombre consignatario</th>
+			<th>Carnet de identidad</th>
+		</tr>
+	</thead>
+	<tbody class="tbody"></tbody>
+</table>
+
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .table thead {
+        background-color: #cacaca;
+    }
+
+    .table th, .table td {
+        padding: 8px;
+        text-align: left;
+    }
+</style>
