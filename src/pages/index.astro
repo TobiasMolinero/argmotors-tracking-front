@@ -2,13 +2,18 @@
 import Layout from '../layouts/Layout.astro';
 import Form from '../components/Form.astro';
 import Table from '../components/Table.astro';
+import Header from '../components/Header.astro';
 ---
 
 <Layout>
 	<main class="main">
-		<h2>Ingresa los datos solicitados para ver el estado de su envio</h2>
-		<Form />
-		<Table />
+		<Header />
+		<section class="container-tracking">
+			<h2>Ingresa los datos solicitados para ver el estado de su envio</h2>
+			<Form />
+			<Table />
+			<!-- A partir de 780px de width hacia abajo hay que mostrar una tabla de dos columnas. -->
+		</section>
 	</main>
 </Layout>
 
@@ -16,14 +21,27 @@ import Table from '../components/Table.astro';
 	.main {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: start;
 		align-items: stretch;
 		row-gap: 20px;
 		height: 100vh;
-		max-width: 1300px;
-		margin: 0 auto;
-		padding: 0 150px;
+		width: 100%;
+		max-width: 1200px;
+		padding: 20px;
+
+		@media screen and (max-width: 564px ) {
+			padding: 8px;
+		}
 	}
+
+	.container-tracking {
+		flex-grow: 1;
+		padding: 80px 0;
+
+		@media screen and (max-width: 1024px ) {
+			padding: 40px 0;
+		}
+	}	
 
 	h2 { 
 		text-align: center;

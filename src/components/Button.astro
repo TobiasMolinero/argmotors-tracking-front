@@ -1,0 +1,47 @@
+---
+interface Props {
+    type: "reset" | "submit" | "button" | null | undefined
+    clase: "primary" | "secondary"
+}
+
+const { type, clase} = Astro.props
+---
+
+<button type={type} class={clase}>
+    <slot />
+</button>
+
+<style is:inline>
+    button {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .primary {
+        background-color: #007bff;        
+    }
+    .primary:hover {
+        background-color: #0056b3;
+    }
+    .primary:active {
+        background-color: #004080;
+    }
+
+    .secondary {
+        color: #004080;
+        background-color: #e7e7e7;
+        border: 1px solid #0056b3;
+    }
+    .secondary:hover {
+        background-color: #b9b9b9;
+        border: 1px solid #004080;
+    }
+    .secondary:active {
+        background-color: #a3a3a3;
+        border: 1px solid #004080;
+    }
+</style>

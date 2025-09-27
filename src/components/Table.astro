@@ -1,25 +1,22 @@
 <script is:inline>
-    // document.addEventListener('DOMContentLoaded', () => {
-        document.addEventListener('trackingNumber', async (e) => {
-            const tableBody = document.querySelector('.tbody');
-            const { trackingNumber } = e.detail;
-            const res = await fetch(`http://localhost:3000/envios/${trackingNumber}`);
-            const data = await res.json();
-            const dataEnvio = data.datos;
-            console.log(dataEnvio)
-
-            tableBody.innerHTML = `
-                <tr>
-                    <td>${dataEnvio[0].estado}</td>
-                    <td>${dataEnvio[0].hbl}</td>
-                    <td>${dataEnvio[0].contenedor_guia}</td>    
-                    <td>${dataEnvio[0].fecha_envio}</td>    
-                    <td>${dataEnvio[0].nombre_consignatario}</td>    
-                    <td>${dataEnvio[0].carnet_identidad}</td>    
-                </tr>
-            `
-        })
-    // })
+    document.addEventListener('trackingNumber', async (e) => {
+        const tableBody = document.querySelector('.tbody');
+        const { trackingNumber } = e.detail;
+        const res = await fetch(`http://localhost:3000/envios/${trackingNumber}`);
+        const data = await res.json();
+        const dataEnvio = data.datos;
+        
+        tableBody.innerHTML = `
+            <tr>
+                <td data-label="Estado">${dataEnvio[0].estado}</td>
+                <td data-label="HBL">${dataEnvio[0].hbl}</td>
+                <td data-label="Contenedor/guía">${dataEnvio[0].contenedor_guia}</td>    
+                <td data-label="Fecha de salida">${dataEnvio[0].fecha_envio}</td>    
+                <td data-label="Nombre consignatario">${dataEnvio[0].nombre_consignatario}</td>    
+                <td data-label="Carnet de identidad">${dataEnvio[0].carnet_identidad}</td>    
+            </tr>
+        `
+    })
 </script>
 
 <table class="table">
@@ -37,18 +34,60 @@
 </table>
 
 <style>
-    .table {
+    :global(.table) {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
     }
 
-    .table thead {
+    :global(.table thead) {
         background-color: #cacaca;
     }
 
-    .table th, .table td {
+    :global(.table th), :global(.table td) {
         padding: 8px;
         text-align: left;
+    }
+
+    @media (max-width: 780px) {
+        :global(.table thead) {
+            display: none;
+        }
+
+        :global(.table),
+        :global(.table tbody),
+        :global(.table th),
+        :global(.table td),
+        :global(.table tr) {
+          display: block;
+          width: 100%;
+        }
+
+        :global(.table tr) {
+          margin-bottom: 1rem;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 0.5rem;
+          background: #f9f9f9;
+        }
+
+        :global(.table td) {
+          border: none;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.4rem 0;
+          white-space: normal;
+        }
+
+        :global(.table td)::before {
+          content: attr(data-label) ": "; /* el nombre de la propiedad */
+          font-weight: bold;
+          text-align: left;
+        }
+
+        :global(.table td):last-child {
+            margin-bottom: 0;
+        }
     }
 </style>

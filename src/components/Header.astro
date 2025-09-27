@@ -1,0 +1,24 @@
+---
+import logo from "../assets/logo.png";
+---
+
+<header class="header">
+    <div>
+        <img src={logo.src} alt="Logo de Argenmotors" class="img">
+    </div>
+</header>
+
+<style>
+    .header {
+        width: 100%;
+        padding: 20px 0;
+    }
+
+    .img {
+        width: 300px;
+
+        @media screen and (max-width: 1024px ) {
+			width: 200px;
+		}
+    }
+</style>
