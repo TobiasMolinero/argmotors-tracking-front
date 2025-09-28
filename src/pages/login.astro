@@ -1,0 +1,46 @@
+---
+import LoginForm from "../components/LoginForm.astro";
+import Layout from "../layouts/Layout.astro";
+import logo from '../assets/logo.png';
+---
+
+<Layout>
+    <main class="main">
+        <div class="container-login">
+            <img src={logo.src} alt="Logo de Argenmotors" class="img">
+            <h3>Ingreso administración</h3>
+            <LoginForm />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .main {
+        width: 100%;
+        max-width: 1200px;
+        flex-grow: 1;
+        display: grid;
+        place-items: center;
+    }
+    
+    .container-login {
+        background-color: white;
+        border: 1px solid #a5a5a5;
+        border-radius: 8px;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 32px;
+        box-shadow: 2px 4px 6px #00000036;
+    }
+
+    .img {
+        margin: 0 auto;
+        width: 300px;
+    }
+
+    h3 {
+        text-align: center;
+        color: #555555
+    }
+</style>

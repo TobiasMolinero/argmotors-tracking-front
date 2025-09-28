@@ -1,1 +1,52 @@
-<input type="text">
+---
+interface Props {
+    id?: string
+    type: "text" | "password"
+    placeholder?: string
+    required?: boolean
+    autocomplete?: "on" | "off"
+    minLength?: number 
+    maxLength?: number
+    title?: string
+}
+
+const {
+    id,
+    type = "text",
+    placeholder,
+    required = false,
+    autocomplete = "on",
+    minLength,
+    maxLength,
+    title,
+} = Astro.props;
+---
+
+<input 
+    id={id}
+    type={type}
+    placeholder={placeholder}
+    required={required}
+    autocomplete={autocomplete}
+    minlength={minLength}
+    maxlength={maxLength}
+    title={title}
+>
+
+<style>
+    input { 
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .error {
+        border: 1px solid rgb(224, 24, 24);
+        color: rgb(224, 24, 24);
+    }
+
+    .error::placeholder {
+        color: rgb(224, 24, 24);
+    }
+</style>

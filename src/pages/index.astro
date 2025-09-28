@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Form from '../components/Form.astro';
+import TrackingForm from '../components/TrackingForm.astro';
 import Table from '../components/Table.astro';
 import Header from '../components/Header.astro';
 ---
@@ -10,9 +10,8 @@ import Header from '../components/Header.astro';
 		<Header />
 		<section class="container-tracking">
 			<h2>Ingresa los datos solicitados para ver el estado de su envio</h2>
-			<Form />
+			<TrackingForm />
 			<Table />
-			<!-- A partir de 780px de width hacia abajo hay que mostrar una tabla de dos columnas. -->
 		</section>
 	</main>
 </Layout>

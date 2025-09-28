@@ -1,10 +1,16 @@
 ---
 import logo from "../assets/logo.png";
+import Button from "./Button.astro";
 ---
 
 <header class="header">
     <div>
         <img src={logo.src} alt="Logo de Argenmotors" class="img">
+    </div>
+    <div>
+        <a href="/login" target="_self">
+            Ingreso Admins
+        </a>
     </div>
 </header>
 
@@ -12,6 +18,8 @@ import logo from "../assets/logo.png";
     .header {
         width: 100%;
         padding: 20px 0;
+        display: flex;
+        justify-content: space-between;
     }
 
     .img {
@@ -20,5 +28,25 @@ import logo from "../assets/logo.png";
         @media screen and (max-width: 1024px ) {
 			width: 200px;
 		}
+    }
+
+    a {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    a {
+        background-color: #007bff;        
+    }
+    a:hover {
+        background-color: #0056b3;
+    }
+    a:active {
+        background-color: #004080;
     }
 </style>

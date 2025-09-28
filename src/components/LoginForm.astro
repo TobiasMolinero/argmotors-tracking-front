@@ -1,0 +1,96 @@
+---
+import Input from "./Input.astro";
+import Button from "./Button.astro";
+---
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => { 
+        const form = document.querySelector('.form');
+        const inputUser = document.querySelector('#input-user');
+        const inputPassword = document.querySelector('#input-password');
+        const textError = document.querySelector('#text-error')
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let userValue = inputUser.value.trim(); 
+            let password = inputPassword.value.trim();
+
+            if(userValue === "" || password === "") {
+                userValue === "" && inputUser.classList.add('error');
+                password === "" && inputPassword.classList.add('error');
+                textError.textContent = 'Usuario y contraseña obligatorios'
+                return
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/
+            function validatePassword(password) {
+                return passwordRegex.test(password);
+            }
+
+            if(!validatePassword(password)) {
+                inputPassword.classList.add('error');
+                textError.textContent = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.'
+                return
+            }
+
+            // Logica para iniciar sesion en el back y redirigir a la vista de admin
+            window.location.replace("/admin")
+        })
+
+        inputPassword.addEventListener('input', (e) => {
+            inputPassword.classList.remove('error');
+            textError.textContent = ""
+        })
+        inputUser.addEventListener('input', () => {
+            inputUser.classList.remove('error');
+            textError.textContent = ""
+        })
+    })
+</script>
+
+<form class="form">
+    <div class="inputs-container">
+        <Input id="input-user" type="text" placeholder="Nombre de usuario" required={true} />
+        <Input
+            id="input-password"
+            type="password"
+            placeholder="Contraseña"
+            required={true}
+            title="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo."
+            autocomplete={"off"}
+        />
+    </div>
+    <div class="button-container">
+        <p id="text-error" class="error"></p>
+        <Button type="submit" clase="primary">Ingresar</Button>
+    </div>
+</form>
+
+<style>
+    .form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 32px;
+    }
+    
+    .inputs-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+    }
+
+    .button-container {
+        display: grid;
+        place-items: center;
+        row-gap: 4px;
+    }
+
+    .error {
+        text-align: center;
+        color: rgb(224, 24, 24);
+        font-size: 14px;
+        font-weight: 400;
+        max-width: 40ch;
+    }
+</style>
