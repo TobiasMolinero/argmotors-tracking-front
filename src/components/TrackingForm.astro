@@ -7,7 +7,7 @@ import Input from "./Input.astro";
     document.addEventListener('DOMContentLoaded', () => {  
         const form = document.querySelector('.form');
         const input = document.querySelector('#input-nroVenta');
-        
+
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const trackingNumber = input.value.trim();

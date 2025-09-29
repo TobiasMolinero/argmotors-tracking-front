@@ -29,6 +29,7 @@ import Button from "./Button.astro";
             }
 
             if(!validatePassword(password)) {
+                console.log(password)
                 inputPassword.classList.add('error');
                 textError.textContent = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.'
                 return

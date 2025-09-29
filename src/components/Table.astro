@@ -1,10 +1,18 @@
 <script is:inline>
     document.addEventListener('trackingNumber', async (e) => {
         const tableBody = document.querySelector('.tbody');
-        const { trackingNumber } = e.detail;
-        const res = await fetch(`http://localhost:3000/envios/${trackingNumber}`);
-        const data = await res.json();
-        const dataEnvio = data.datos;
+        // const { trackingNumber } = e.detail;
+        // const res = await fetch(`http://localhost:3000/envios/${trackingNumber}`);
+        // const data = await res.json();
+        // const dataEnvio = data.datos;
+        const dataEnvio = [{
+            estado: "En viaje",
+            hbl: 231341341,
+            contenedor_guia: "c-1231231",
+            fecha_envio: "09/29/2025",
+            nombre_consignatario: "Nombre de prueba",
+            carnet_identidad: 123123112,
+        }]
         
         tableBody.innerHTML = `
             <tr>
