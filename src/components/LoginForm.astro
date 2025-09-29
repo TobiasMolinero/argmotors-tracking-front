@@ -51,7 +51,7 @@ import Button from "./Button.astro";
 
 <form class="form">
     <div class="inputs-container">
-        <Input id="input-user" type="text" placeholder="Nombre de usuario" required={true} />
+        <Input id="input-user" type="text" placeholder="Nombre de usuario" required={true} inputmode="text" />
         <Input
             id="input-password"
             type="password"
@@ -59,6 +59,7 @@ import Button from "./Button.astro";
             required={true}
             title="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo."
             autocomplete={"off"}
+            inputmode="text"
         />
     </div>
     <div class="button-container">
