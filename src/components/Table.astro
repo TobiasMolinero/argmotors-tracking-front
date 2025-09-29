@@ -2,7 +2,7 @@
     document.addEventListener('trackingNumber', async (e) => {
         const tableBody = document.querySelector('.tbody');
         const { trackingNumber } = e.detail;
-        const res = await fetch(`http://localhost:3000/envios/${trackingNumber}`);
+        const res = await fetch(`https://argmotors-tracking-back.onrender.com/envios/${trackingNumber}`);
         const data = await res.json();
         const dataEnvio = data.datos;
         
