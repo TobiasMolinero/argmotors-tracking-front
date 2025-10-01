@@ -10,7 +10,7 @@ import Button from "./Button.astro";
         const inputPassword = document.querySelector('#input-password');
         const textError = document.querySelector('#text-error')
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async(e) => {
             e.preventDefault();
 
             let userValue = inputUser.value.trim(); 
@@ -35,7 +35,26 @@ import Button from "./Button.astro";
             }
 
             // Logica para iniciar sesion en el back y redirigir a la vista de admin
-            window.location.replace("/admin")
+            const res = await fetch("https://argmotors-tracking-back.vercel.app/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    username: userValue,
+                    password: password
+                })
+            })
+
+            const data = await res.json();
+            if(res.ok) {
+                console.log("Login exitoso: ", data)
+                
+                window.location.replace("/admin")
+            } else {
+                alert(data.error || "Error al iniciar sesión")
+            }
         })
 
         inputPassword.addEventListener('input', (e) => {
