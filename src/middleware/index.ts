@@ -9,8 +9,7 @@ export const onRequest: MiddlewareHandler = (context, next) => {
     const token = cookies.get('auth-token');
     
     if (!token) {
-      debugger
-      console.log('No esta autorizado')
+      alert('No esta autorizado para ingresar')
       return redirect('/login');
     }
   }

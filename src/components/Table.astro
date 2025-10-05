@@ -1,29 +1,42 @@
-<script is:inline>
+<script>
+    // @ts-nocheck
+    import { fetchAPI } from "../utils/api";
     document.addEventListener('trackingNumber', async (e) => {
         const tableBody = document.querySelector('.tbody');
         const { trackingNumber } = e.detail;
-        const res = await fetch(`https://argmotors-tracking-back.vercel.app/envios/${trackingNumber}`);
-        const data = await res.json();
-        const dataEnvio = data.datos;
-        
-        if(dataEnvio) {
-            tableBody.innerHTML = `
-                <tr>
-                    <td data-label="Estado">${dataEnvio[0].estado}</td>
-                    <td data-label="HBL">${dataEnvio[0].hbl}</td>
-                    <td data-label="Contenedor/guía">${dataEnvio[0].contenedor_guia}</td>    
-                    <td data-label="Fecha de salida">${dataEnvio[0].fecha_envio}</td>    
-                    <td data-label="Nombre consignatario">${dataEnvio[0].nombre_consignatario}</td>    
-                    <td data-label="Carnet de identidad">${dataEnvio[0].carnet_identidad}</td>    
-                </tr>
-            `
-        } else {
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="6"><h2 style="color: #555555; text-align: center">No se encontró resultado</h2></td>    
-                </tr>
-            `
+
+        try {            
+            const res = await fetchAPI(`/envios/${trackingNumber}`);
+            console.log(res)
+            const dataEnvio = res.datos;
+            
+            if(dataEnvio && dataEnvio.length) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td data-label="Estado">${dataEnvio[0].estado}</td>
+                        <td data-label="HBL">${dataEnvio[0].hbl}</td>
+                        <td data-label="Contenedor/guía">${dataEnvio[0].contenedor_guia}</td>    
+                        <td data-label="Fecha de salida">${dataEnvio[0].fecha_envio}</td>    
+                        <td data-label="Nombre consignatario">${dataEnvio[0].nombre_consignatario}</td>    
+                        <td data-label="Carnet de identidad">${dataEnvio[0].carnet_identidad}</td>    
+                    </tr>
+                `
+            } else {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6"><h2 style="color: #555555; text-align: center">No se encontró resultado</h2></td>    
+                    </tr>
+                `
+            }
+        } catch (error) {
+            console.log(error)
         }
+    })
+
+    document.addEventListener('cleanSearch', () => {
+        const tableBody = document.querySelector(".tbody");
+
+        tableBody.innerHTML = "";
     })
 </script>
 

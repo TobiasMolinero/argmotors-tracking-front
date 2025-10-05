@@ -3,7 +3,9 @@ import Input from "./Input.astro";
 import Button from "./Button.astro";
 ---
 
-<script is:inline>
+<script>
+    // @ts-nocheck
+    import { fetchAPI } from "../utils/api";
     document.addEventListener('DOMContentLoaded', () => { 
         const form = document.querySelector('.form');
         const inputUser = document.querySelector('#input-user');
@@ -35,7 +37,7 @@ import Button from "./Button.astro";
             }
 
             // Logica para iniciar sesion en el back y redirigir a la vista de admin
-            const res = await fetch("https://argmotors-tracking-back.vercel.app/auth/login", {
+            const res = await fetchAPI("/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -47,10 +49,7 @@ import Button from "./Button.astro";
                 })
             })
 
-            const data = await res.json();
-            if(res.ok) {
-                console.log("Login exitoso: ", data)
-                
+            if(res.success) {                
                 window.location.replace("/admin")
             } else {
                 alert(data.error || "Error al iniciar sesión")

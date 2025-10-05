@@ -7,6 +7,7 @@ import Input from "./Input.astro";
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.querySelector('.form');
         const input = document.querySelector('#input-nroVenta');
+        const buttonCleanSearch = document.querySelector('#btnCleanSearch');
         
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -18,17 +19,28 @@ import Input from "./Input.astro";
             };
             
             document.dispatchEvent(new CustomEvent('trackingNumber', {
-                detail: { trackingNumber },
+                detail: { trackingNumber: `v-${trackingNumber}` },
             }))
+        })
+
+        buttonCleanSearch.addEventListener('click', () => {
+            input.value = "";
+            document.dispatchEvent(new CustomEvent('cleanSearch'));
         })
     })
 </script>
 
 <form class="form">
-    <Input id="input-nroVenta" type="text" placeholder="Nro. de venta" required={true} inputmode="text" />
+    <div class="input-container">
+        <div class="span">v-</div>
+        <Input id="input-nroVenta" type="number" style="flex: 1; border-radius: 0 5px 5px 0" placeholder="Nro. de venta (Ingrese solo el número)" required={true} inputmode="numeric" />
+    </div>
     <div class="button-container">
         <Button type="submit" clase="primary">
             Buscar
+        </Button>
+        <Button id="btnCleanSearch" type="button" clase="secondary">
+            Limpiar
         </Button>
     </div>
 </form>
@@ -41,8 +53,23 @@ import Input from "./Input.astro";
         padding: 20px;
     }
 
+    .input-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .span {
+        background-color: rgb(192, 192, 192);
+        padding: 10px;
+        border-radius: 4px 0 0 4px;
+        font-weight: 600;
+    }
+
     .button-container {
-        display: grid;
-        place-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 8px;
     }
 </style>

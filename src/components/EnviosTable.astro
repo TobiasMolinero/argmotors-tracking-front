@@ -1,0 +1,179 @@
+---
+---
+
+<script>
+    // @ts-nocheck
+    import { fetchAPI } from "../utils/api";
+    document.addEventListener("DOMContentLoaded", async () => {
+        const tbody = document.querySelector(".tbody");
+
+        async function fetchEnvios() {
+            try {
+                const res = await fetchAPI("/envios", {
+                    method: "GET",
+                    credentials: "include"
+                });
+                const envios = res.datos;
+
+                if(envios) {
+                    tbody.innerHTML = envios.map(envio => `
+                        <tr>
+                            <td>
+                                <button id="btnEdit" class="button">Editar</button>
+                                <button id="btnUpdateState" class="button">Actualizar<br> estado</button>
+                            </td>    
+                            <td data-label="Nro. Venta">${envio.nro_venta}</td>    
+                            <td data-label="Estado">${envio.estado}</td>    
+                            <td data-label="HBL">${envio.hbl}</td>    
+                            <td data-label="Contenedor/guía">${envio.contenedor_guia}</td>    
+                            <td data-label="Fecha de envío">${envio.fecha_envio}</td>    
+                            <td data-label="Nombre consignatario">${envio.nombre_consignatario}</td>    
+                            <td data-label="Carnet de identidad">${envio.carnet_identidad}</td>
+                        </tr>
+                    `).join("")
+                } else {
+                    tbody.innerHTML = envios.map(envio => `
+                        <tr>
+                            <td colspan="8"><h2 style="color: #555555; text-align: center">No se encontró resultado</h2></td>    
+                        </tr>
+                    `)
+                }
+            } catch (error) {
+                alert('Ocurrió un error al intentar obtener los datos.');
+            }
+        }
+
+        fetchEnvios();
+
+        document.addEventListener('getEnvios', () => {
+            fetchEnvios();
+        })
+
+        document.addEventListener('getEnvio', async (e) => {
+            const { nroVenta } = e.detail;
+            const res = await fetchAPI(`/envios/${nroVenta}`)
+            const dataEnvio = res.datos;
+
+            if(dataEnvio || dataEnvio.lenght) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td><button style="padding: 10px 20px; background: #007bff; font-size: 16px; border: none; cursor: pointer">Editar</button></td> 
+                        <td data-label="Nro. venta">${dataEnvio[0].nro_venta}</td>
+                        <td data-label="Estado">${dataEnvio[0].estado}</td>
+                        <td data-label="HBL">${dataEnvio[0].hbl}</td>
+                        <td data-label="Contenedor/guía">${dataEnvio[0].contenedor_guia}</td>    
+                        <td data-label="Fecha de salida">${dataEnvio[0].fecha_envio}</td>    
+                        <td data-label="Nombre consignatario">${dataEnvio[0].nombre_consignatario}</td>    
+                        <td data-label="Carnet de identidad">${dataEnvio[0].carnet_identidad}</td>    
+                    </tr>
+                `
+            } else {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8"><h2 style="color: #555555; text-align: center">No se encontró resultado</h2></td>    
+                    </tr>
+                `
+            }   
+        })
+    })
+</script>
+
+<table class="table">
+    <thead class="thead">
+        <tr>
+            <th></th>
+            <th>Nro. venta</th>
+            <th>Estado</th>
+            <th>HBL</th>
+            <th>Contenedor/guía</th>
+            <th>Fecha de envío</th>
+            <th>Nombre consignatario</th>
+            <th>Carnet de identidad</th>
+        </tr>
+    </thead>
+    <tbody class="tbody"></tbody>
+</table>
+
+<style>
+    :global(.button) {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        background-color: #007bff;     
+    }
+    :global(.button:hover) {
+        background-color: #0056b3;
+    }
+    :global(.button:active) {
+        background-color: #004080;
+    }
+
+    :global(.table) {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    :global(.table thead) {
+        background-color: #cacaca;
+        position: sticky;
+        top: 0;
+
+    }
+
+    :global(.table th), :global(.table td) {
+        padding: 8px;
+        text-align: left;
+    }
+
+    :global(.table td) {
+        padding: 12px;
+        background-color: #eeeeee;
+        border-bottom: 1px solid #cacaca;
+    }
+
+    @media (max-width: 780px) {
+        :global(.table thead) {
+            display: none;
+        }
+
+        :global(.table),
+        :global(.table tbody),
+        :global(.table th),
+        :global(.table td),
+        :global(.table tr) {
+          display: block;
+          width: 100%;
+        }
+
+        :global(.table tr) {
+          margin-bottom: 1rem;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 0.5rem;
+          background: #f9f9f9;
+        }
+
+        :global(.table td) {
+          border: none;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.4rem 0;
+          white-space: normal;
+        }
+
+        :global(.table td)::before {
+          content: attr(data-label) ": "; /* el nombre de la propiedad */
+          font-weight: bold;
+          text-align: left;
+        }
+
+        :global(.table td):last-child {
+            margin-bottom: 0;
+        }
+    }
+</style>

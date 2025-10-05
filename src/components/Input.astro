@@ -1,7 +1,7 @@
 ---
 interface Props {
     id?: string
-    type: "text" | "password"
+    type: "text" | "password" | "number"
     placeholder?: string
     required?: boolean
     autocomplete?: "on" | "off"
@@ -9,6 +9,7 @@ interface Props {
     maxLength?: number
     title?: string
     inputmode: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search"
+    style?: string
 }
 
 const {
@@ -20,11 +21,13 @@ const {
     minLength,
     maxLength,
     title,
+    style,
 } = Astro.props;
 ---
 
 <input 
     id={id}
+    style={style}
     type={type}
     placeholder={placeholder}
     required={required}

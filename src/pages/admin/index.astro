@@ -1,0 +1,124 @@
+---
+import EnviosTable from "../../components/EnviosTable.astro";
+import Layout from "../../layouts/Layout.astro";
+import Input from "../../components/Input.astro";
+import Button from "../../components/Button.astro";
+---
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("#form");
+        const inputNroVenta = document.querySelector("#inputNroVenta");
+        const buttonCleanSearch = document.querySelector("#btnCleanSearch");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const nroVenta = `v-${inputNroVenta.value.trim()}`;
+
+            document.dispatchEvent(new CustomEvent('getEnvio', {
+                detail: { nroVenta }
+            }))
+        })
+
+        buttonCleanSearch.addEventListener("click", async () => {
+            inputNroVenta.value = "";
+
+            document.dispatchEvent(new CustomEvent('getEnvios'));
+        })
+    })
+</script>
+
+<Layout>
+    <main class="main">
+        <h1>Panel de administración</h1>
+        <div class="table-section">
+            <h2>Envios</h2>
+            <div class="menu">
+                <form id="form">
+                    <div class="input-container">
+                        <div class="span">v-</div>
+                        <Input 
+                            id="inputNroVenta"
+                            type="number"
+                            placeholder="Buscar"
+                            style="flex: 1; border-radius: 0 5px 5px 0"
+                            required={true}
+                            inputmode="numeric"
+                        />
+                    </div>
+                    <div>
+                        <Button type="submit" clase="primary">Buscar</Button>
+                        <Button id="btnCleanSearch" type="button" clase="secondary">Limpiar</Button>
+                    </div>
+                </form>
+                <a href="/admin/registrar">Registrar</a>
+            </div>
+            <div class="table-container">
+                <EnviosTable />
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .main {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        row-gap: 40px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    a {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        background-color: #007bff;
+        text-decoration: none;        
+    }
+    a:hover {
+        background-color: #0056b3;
+    }
+    a:active {
+        background-color: #004080;
+    }
+
+    .table-section {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .table-container {
+        flex-grow: 1;
+        height: 0;
+        overflow-y: auto;
+        margin-bottom: 40px;
+    }
+
+    .input-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .span {
+        background-color: rgb(192, 192, 192);
+        padding: 10px;
+        border-radius: 4px 0 0 4px;
+        font-weight: 600;
+    }
+</style>

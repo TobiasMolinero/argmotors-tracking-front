@@ -1,0 +1,20 @@
+---
+import CreateForm from "../../components/CreateForm.astro";
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+---
+
+<Layout>
+    <main class="main">
+        <a href="/admin">Volver atras</a>
+        <CreateForm />
+    </main>
+</Layout>
+
+<style>
+    .main {
+        flex: 1;
+        display: grid;
+        place-items: center;
+    }
+</style>

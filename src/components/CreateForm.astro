@@ -1,0 +1,140 @@
+---
+import Button from '../components/Button.astro'
+---
+
+<script>
+    // @ts-nocheck
+  import { fetchAPI } from "../utils/api";
+
+  const inputFechaVenta = document.querySelector<HTMLInputElement>("#inputFechaVenta");
+  const hoy = new Date();
+  const anio = hoy.getFullYear();
+  const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+  const dia = String(hoy.getDate()).padStart(2, "0");
+
+  if(inputFechaVenta) {
+    inputFechaVenta.max = `${anio}-${mes}-${dia}`;
+  }
+
+  const form = document.querySelector('.form');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nroVenta = document.querySelector('#inputNroVenta').value.trim(); 
+    const fechaVenta = document.querySelector('#inputFechaVenta').value.trim(); 
+    const fechaEnvio = document.querySelector('#inputFechaEnvio').value.trim(); 
+    const estado = document.querySelector('#selectEstado').value.trim(); 
+    const hbl = document.querySelector('#inputHbl').value.trim();
+    const contenedorGuia = document.querySelector('#inputContenedor').value.trim();
+    const nombre = document.querySelector('#inputNombre').value.trim();
+    const carnet = document.querySelector('#inputCarnet').value.trim();
+
+    console.log({
+      nroVenta,
+      fechaVenta,
+      fechaEnvio,
+      estado,
+      hbl,
+      contenedorGuia,
+      nombre,
+      carnet
+    })
+
+    try {
+        const res = await fetchAPI("/envios", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                nro_venta: `v-${nroVenta}`,
+                fecha_venta: fechaVenta,
+                fecha_envio: fechaEnvio,
+                estado,
+                hbl,
+                contenedor_guia: contenedorGuia,
+                nombre_consignatario: nombre,
+                carnet_identidad: carnet
+            })
+        });
+    } catch (error) {
+        alert('Ocurrió un error al intentar registrar el envío.');
+    }
+  })
+</script>
+
+<form class="form">
+    <div class="body-form">
+        <div>
+            <label for="">Nro. de venta(solo el numero): v-</label>
+            <input id="inputNroVenta" type="number" placeholder="Nro. de venta" inputmode="numeric" required>
+        </div>
+        <div>
+            <label for="">Fecha de venta:</label>
+            <input id="inputFechaVenta" type="date">
+        </div>
+        <div>
+            <label for="">Fecha de envio:</label>
+            <input id="inputFechaEnvio" type="date">
+        </div>
+        <div>
+            <label for="">Estado:</label>
+            <select id="selectEstado">
+                <option value="En bodega">En bodega</option>
+                <option value="Empresa de envíos">Empresa de envíos</option>
+                <option value="En tránsito a Cuba">En tránsito a Cuba</option>
+                <option value="En puerto Mariel">Puerto Mariel</option>
+                <option value="Esperando transporte de agencia">Esperando transporte de agencia</option>
+                <option value="Aduana - próximo a proceso">Aduana - próximo a proceso</option>
+                <option value="Contenedor abierto - Rayos X">Contenedor abierto - Rayos X</option>
+                <option value="Contenedor abierto - Unidad canina">Contenedor abierto - Unidad canina</option>
+                <option value="Proceso de desagrupe">Proceso de desagrupe</option>
+                <option value="Próximo a entrega">Próximo a entrega</option>
+            </select>
+        </div>
+        <div>
+            <label for="">HBL</label>
+            <input id="inputHbl" type="text">
+        </div>
+        <div>
+            <label for="">Contenedor/Guía</label>
+            <input id="inputContenedor" type="text">
+        </div>
+        <div>
+            <label for="">Nombre consignatario</label>
+            <input id="inputNombre" type="text">
+        </div>
+        <div>
+            <label for="">Carnet identidad</label>
+            <input id="inputCarnet" type="text">
+        </div>
+    </div>
+    <Button type="submit" clase='primary'>Registrar</Button>
+</form>
+
+<style>
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+    }
+
+    .body-form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 8px;
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    input, select { 
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+</style>

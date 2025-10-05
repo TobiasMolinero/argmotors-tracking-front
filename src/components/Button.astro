@@ -2,12 +2,13 @@
 interface Props {
     type: "reset" | "submit" | "button" | null | undefined
     clase: "primary" | "secondary"
+    id?: string
 }
 
-const { type, clase} = Astro.props
+const { id, type, clase} = Astro.props
 ---
 
-<button type={type} class={clase}>
+<button id={id} type={type} class={clase}>
     <slot />
 </button>
 
