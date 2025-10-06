@@ -1,6 +1,5 @@
 export async function fetchAPI(endpoint: string, options: RequestInit = {}) {
-    console.log(import.meta.env.API_URL);
-    const API_URL = import.meta.env.API_URL || 'http://localhost:3000/';
+    const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3000/';
 
     const res = await fetch(`${API_URL.replace(/\/$/, '')}${endpoint.replace(/\/$/, '')}`, options);
     const data = await res.json();
