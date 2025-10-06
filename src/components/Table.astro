@@ -6,7 +6,12 @@
         const { trackingNumber } = e.detail;
 
         try {            
-            const res = await fetchAPI(`/envios/${trackingNumber}`);
+            const res = await fetchAPI(`/envios/${trackingNumber}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             const dataEnvio = res.datos;
             
             if(dataEnvio && dataEnvio.length) {
