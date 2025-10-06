@@ -7,7 +7,6 @@
 
         try {            
             const res = await fetchAPI(`/envios/${trackingNumber}`);
-            console.log(res)
             const dataEnvio = res.datos;
             
             if(dataEnvio && dataEnvio.length) {
