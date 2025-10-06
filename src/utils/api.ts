@@ -1,7 +1,7 @@
 // @ts-nocheck
 export async function fetchAPI(endpoint: string, options: RequestInit = {}) {
     // const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3000/';
-    const res = await fetch(`https://international-tracking.vercel.app${endpoint}}`, options);
+    const res = await fetch(`https://argmotors-tracking-back.vercel.app${endpoint}}`, options);
     const data = await res.json();
     console.log(data);
     if(data.error === "NO_ACC_TKN") {
